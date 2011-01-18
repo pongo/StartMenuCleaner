@@ -65,43 +65,10 @@ namespace StartProgramCleaner
         {
             try
             {
+                CheckDirectory(sDir);
+
                 foreach (var dir in Directory.GetDirectories(sDir))
                 {
-                    System.Diagnostics.Debug.WriteLine(dir);
-
-                    if (IsDirectoryEmpty(dir))
-                    {
-                        var sd = new ShortcutDetails
-                                     {
-                                         Name = Path.GetFileName(dir),
-                                         Target = "Empty Directory",
-                                         ShortcutPath = dir,
-                                         Description = "Empty Directory"
-                                     };
-                        EmptyDirectories.Add(sd);
-                        continue;
-                    }
-                    
-                    foreach (var file in Directory.GetFiles(dir))
-                    {
-                        System.Diagnostics.Debug.WriteLine(file);
-
-                        var e = Path.GetExtension(file);
-                        if (string.IsNullOrEmpty(e) || e.ToLower() != ".lnk") continue;
-
-                        var targetFilepath = GetTarget(file);
-                        if (System.IO.File.Exists(targetFilepath) || Directory.Exists(targetFilepath)) continue;
-
-                        var sd = new ShortcutDetails
-                                     {
-                                         Name = Path.GetFileNameWithoutExtension(file),
-                                         Target = targetFilepath,
-                                         ShortcutPath = file,
-                                         Description = GetDescription(file)
-                                     };
-                        ShortcutFiles.Add(sd);
-                    }
-
                     DirRecurseSearch(dir);
                 }
             }
@@ -109,6 +76,49 @@ namespace StartProgramCleaner
             {
                 Console.WriteLine(excpt.Message);
             }
+        }
+
+        private static void CheckDirectory(string dir)
+        {
+            System.Diagnostics.Debug.WriteLine(dir);
+
+            if (IsDirectoryEmpty(dir))
+            {
+                EmptyDirectories.Add(CreateNewShortcutDetails(
+                    Path.GetFileName(dir), "Empty Directory", dir, "Empty Directory"));
+
+                return;
+            }
+                    
+            foreach (var file in Directory.GetFiles(dir))
+            {
+                System.Diagnostics.Debug.WriteLine(file);
+
+                var e = Path.GetExtension(file);
+                if (string.IsNullOrEmpty(e) || e.ToLower() != ".lnk") continue;
+
+                var targetFilePath = GetTarget(file);
+                if (IsTargetExists(targetFilePath)) continue;
+
+                ShortcutFiles.Add(CreateNewShortcutDetails(
+                    Path.GetFileNameWithoutExtension(file), targetFilePath, file, GetDescription(file)));
+            }
+        }
+
+        private static bool IsTargetExists(string path)
+        {
+            return System.IO.File.Exists(path) || Directory.Exists(path);
+        }
+
+        private static ShortcutDetails CreateNewShortcutDetails(string name, string target, string shortcutPath, string description)
+        {
+            return new ShortcutDetails
+                       {
+                           Name = name,
+                           Target = target,
+                           ShortcutPath = shortcutPath,
+                           Description = description
+                       };
         }
 
         private static bool IsDirectoryEmpty(string path)
