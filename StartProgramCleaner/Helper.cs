@@ -2,6 +2,8 @@
 using System.Collections;
 using System.IO;
 using IWshRuntimeLibrary;
+using Microsoft.VisualBasic;
+using Microsoft.VisualBasic.FileIO;
 
 namespace StartProgramCleaner
 {
@@ -142,7 +144,9 @@ namespace StartProgramCleaner
             try
             {
                 var dirParent = new DirectoryInfo(filepath).Parent;
-                System.IO.File.Delete(filepath);
+                Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(filepath,
+                                                                   UIOption.OnlyErrorDialogs,
+                                                                   RecycleOption.SendToRecycleBin);
 
                 if (dirParent != null && IsDirectoryEmpty(dirParent.FullName)) DeleteFolder(dirParent.FullName);
             }
@@ -162,7 +166,9 @@ namespace StartProgramCleaner
             try
             {
                 var dirParent = new DirectoryInfo(folderpath).Parent;
-                Directory.Delete(folderpath);
+                Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(folderpath,
+                                                                        UIOption.OnlyErrorDialogs,
+                                                                        RecycleOption.SendToRecycleBin);
 
                 if (dirParent != null && IsDirectoryEmpty(dirParent.FullName)) DeleteFolder(dirParent.FullName);
             }
