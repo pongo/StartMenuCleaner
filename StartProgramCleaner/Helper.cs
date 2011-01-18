@@ -32,24 +32,22 @@ namespace StartProgramCleaner
             return startmenu.Name;
         }
 
-        /// <summary>
-        /// Get shortcut target file path
-        /// </summary>
-        /// <param name="shortcutFile">the shortcut file path</param>
-        /// <returns></returns>
-        private static string GetTarget(string shortcutFile)
+        private static string GetShortcutTarget(string shortcutFile)
         {
             var shortcut = (IWshShortcut)Wsh.CreateShortcut(shortcutFile);
             return shortcut.TargetPath == string.Empty ? shortcutFile : shortcut.TargetPath;
         }
 
-        private static string GetDescription(string shortcutFile)
+        private static string GetShortcutDescription(string shortcutFile)
         {
             var shll = new WshShell();
             var shortcut = (IWshShortcut)shll.CreateShortcut(shortcutFile);
             return shortcut.Description;
         }
 
+        /// <summary>
+        /// Gets all wrong shortcuts and empty directories.
+        /// </summary>
         public static void GetShortcuts()
         {
             ShortcutFiles.Clear();
@@ -97,11 +95,11 @@ namespace StartProgramCleaner
                 var e = Path.GetExtension(file);
                 if (string.IsNullOrEmpty(e) || e.ToLower() != ".lnk") continue;
 
-                var targetFilePath = GetTarget(file);
+                var targetFilePath = GetShortcutTarget(file);
                 if (IsTargetExists(targetFilePath)) continue;
 
                 ShortcutFiles.Add(CreateNewShortcutDetails(
-                    Path.GetFileNameWithoutExtension(file), targetFilePath, file, GetDescription(file)));
+                    Path.GetFileNameWithoutExtension(file), targetFilePath, file, GetShortcutDescription(file)));
             }
         }
 
@@ -126,11 +124,19 @@ namespace StartProgramCleaner
             return Directory.GetFiles(path).Length == 0 && Directory.GetDirectories(path).Length == 0;
         }
 
+        /// <summary>
+        /// Opens the shortcutFile in explorer.
+        /// </summary>
+        /// <param name="shortcutFile">The shortcut file.</param>
         public static void OpenInExplorer(string shortcutFile)
         {
             Wsh.Exec(string.Format("Explorer /select,{0}", shortcutFile));
         }
 
+        /// <summary>
+        /// Deletes the file.
+        /// </summary>
+        /// <param name="filepath">The filepath.</param>
         public static void DeleteFile(string filepath)
         {
             try
@@ -144,6 +150,10 @@ namespace StartProgramCleaner
             }
         }
 
+        /// <summary>
+        /// Deletes the folder.
+        /// </summary>
+        /// <param name="folderpath">The folderpath.</param>
         public static void DeleteFolder(string folderpath)
         {
             try
