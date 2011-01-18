@@ -67,24 +67,34 @@ namespace StartProgramCleaner
         {
             if (sender == btnDeleteAll)
             {
+                // сперва удаляем ярлыки, а потом папки
+
                 foreach (ListViewItem item in lvFiles.Items)
                 {
-                    if (item.Checked)
-                    {
-                        item.Text = @"Deleting > " + item.Text;
-                        var sd = (ShortcutDetails) item.Tag;
-                        if (sd.Description != "Empty Directory")
-                        {
-                            Helper.ShortcutFiles.Remove(item.Tag);
-                            Helper.DeleteFile(sd.ShortcutPath);
-                        }
-                        else
-                        {
-                            Helper.EmptyDirectories.Remove(item.Tag);
-                            Helper.DeleteFolder(sd.ShortcutPath);
-                        }
-                        item.Text = @"Deleted";
-                    }
+                    if (!item.Checked) continue;
+                    if (item.Text == @"Deleted") continue;
+
+                    var sd = (ShortcutDetails) item.Tag;
+                    if (sd.Description == "Empty Directory") continue;
+
+                    item.Text = @"Deleting > " + item.Text;
+                    Helper.ShortcutFiles.Remove(item.Tag);
+                    Helper.DeleteFile(sd.ShortcutPath);
+                    item.Text = @"Deleted";
+                }
+
+                foreach (ListViewItem item in lvFiles.Items)
+                {
+                    if (!item.Checked) continue;
+                    if (item.Text == @"Deleted") continue;
+
+                    var sd = (ShortcutDetails) item.Tag;
+                    if (sd.Description != "Empty Directory") continue;
+
+                    item.Text = @"Deleting > " + item.Text;
+                    Helper.EmptyDirectories.Remove(item.Tag);
+                    Helper.DeleteFolder(sd.ShortcutPath);
+                    item.Text = @"Deleted";
                 }
             }
 
