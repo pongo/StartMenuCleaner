@@ -19,7 +19,7 @@ namespace StartProgramCleaner
     {
         static WshShellClass wsh = new WshShellClass();
 
-        static string _programs_folder = @"Start Menu\Programs";
+        static string _programs_folder = GetProgramsFolder();
         static string[] _programs_path = {
                                             Environment.GetEnvironmentVariable("ALLUSERSPROFILE"),
                                             Environment.GetEnvironmentVariable("USERPROFILE")
@@ -30,7 +30,14 @@ namespace StartProgramCleaner
 
         public Helper()
         {
-            
+        }
+
+        private static string GetProgramsFolder()
+        {
+            var programs = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.Programs));
+            var startmenu = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu));
+            var s = string.Format("{0}\\{1}", startmenu.Name, programs.Name);
+            return s;
         }
 
         /// <summary>
