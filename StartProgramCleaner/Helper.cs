@@ -41,33 +41,14 @@ namespace StartProgramCleaner
         private static string GetTarget(string shortcutFile)
         {
             var shortcut = (IWshShortcut)Wsh.CreateShortcut(shortcutFile);
-            string t;
-
-            if (shortcut.TargetPath != string.Empty)
-            {
-                t = shortcut.TargetPath;
-            }
-            else
-            {
-                // for URL shortcuts but with has an .LNK extension
-                //IWshURLShortcut url_shortcut = (IWshURLShortcut)wsh.CreateShortcut(shortcut_file);
-
-                // anyway .. we'll just assume this is a URL shortcut
-                // so let's just return set the TargetPath the same as the shortcut file path.
-                t = shortcutFile;
-            }
-            
-            shortcut = null;
-            return t;
+            return shortcut.TargetPath == string.Empty ? shortcutFile : shortcut.TargetPath;
         }
 
         private static string GetDescription(string shortcutFile)
         {
             var shll = new WshShell();
             var shortcut = (IWshShortcut)shll.CreateShortcut(shortcutFile);
-            var d = shortcut.Description;
-            shortcut = null;
-            return d;
+            return shortcut.Description;
         }
 
         public static void GetShortcuts()
