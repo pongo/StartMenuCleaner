@@ -158,7 +158,10 @@ namespace StartProgramCleaner
         {
             try
             {
+                var dirParent = new DirectoryInfo(folderpath).Parent;
                 Directory.Delete(folderpath);
+
+                if (dirParent != null && IsDirectoryEmpty(dirParent.FullName)) DeleteFolder(dirParent.FullName);
             }
             catch (Exception ex)
             {
