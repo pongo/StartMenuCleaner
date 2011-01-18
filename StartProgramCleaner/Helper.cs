@@ -2,7 +2,6 @@
 using System.Collections;
 using System.IO;
 using IWshRuntimeLibrary;
-using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.FileIO;
 
 namespace StartProgramCleaner
@@ -94,8 +93,8 @@ namespace StartProgramCleaner
             {
                 System.Diagnostics.Debug.WriteLine(file);
 
-                var e = Path.GetExtension(file);
-                if (string.IsNullOrEmpty(e) || e.ToLower() != ".lnk") continue;
+                var extension = Path.GetExtension(file);
+                if (string.IsNullOrEmpty(extension) || extension.ToLower() != ".lnk") continue;
 
                 var targetFilePath = GetShortcutTarget(file);
                 if (IsTargetExists(targetFilePath)) continue;
@@ -144,9 +143,9 @@ namespace StartProgramCleaner
             try
             {
                 var dirParent = new DirectoryInfo(filepath).Parent;
-                Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(filepath,
-                                                                   UIOption.OnlyErrorDialogs,
-                                                                   RecycleOption.SendToRecycleBin);
+                FileSystem.DeleteFile(filepath,
+                                      UIOption.OnlyErrorDialogs,
+                                      RecycleOption.SendToRecycleBin);
 
                 if (dirParent != null && IsDirectoryEmpty(dirParent.FullName)) DeleteFolder(dirParent.FullName);
             }
@@ -166,9 +165,9 @@ namespace StartProgramCleaner
             try
             {
                 var dirParent = new DirectoryInfo(folderpath).Parent;
-                Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(folderpath,
-                                                                        UIOption.OnlyErrorDialogs,
-                                                                        RecycleOption.SendToRecycleBin);
+                FileSystem.DeleteDirectory(folderpath,
+                                           UIOption.OnlyErrorDialogs,
+                                           RecycleOption.SendToRecycleBin);
 
                 if (dirParent != null && IsDirectoryEmpty(dirParent.FullName)) DeleteFolder(dirParent.FullName);
             }
