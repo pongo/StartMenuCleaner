@@ -44,9 +44,9 @@
             this.btnDeleteAll = new System.Windows.Forms.ToolStripButton();
             this.btnRescan = new System.Windows.Forms.ToolStripButton();
             this.lvFiles = new System.Windows.Forms.ListView();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.il16 = new System.Windows.Forms.ImageList(this.components);
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -69,7 +69,7 @@
             this.panel1.ForeColor = System.Drawing.Color.White;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(632, 72);
+            this.panel1.Size = new System.Drawing.Size(827, 72);
             this.panel1.TabIndex = 0;
             // 
             // label2
@@ -88,7 +88,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox2.BackgroundImage = global::StartProgramCleaner.Properties.Resources.header_right_bg;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(507, 0);
+            this.pictureBox2.Location = new System.Drawing.Point(702, 0);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(125, 72);
             this.pictureBox2.TabIndex = 2;
@@ -127,14 +127,14 @@
             this.btnRescan});
             this.toolStrip1.Location = new System.Drawing.Point(0, 72);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(632, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(827, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(37, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(36, 22);
             this.toolStripLabel1.Text = "Select";
             // 
             // btnSelAll
@@ -143,7 +143,7 @@
             this.btnSelAll.Image = ((System.Drawing.Image)(resources.GetObject("btnSelAll.Image")));
             this.btnSelAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSelAll.Name = "btnSelAll";
-            this.btnSelAll.Size = new System.Drawing.Size(24, 22);
+            this.btnSelAll.Size = new System.Drawing.Size(23, 22);
             this.btnSelAll.Text = "All";
             // 
             // btnSelInvert
@@ -152,7 +152,7 @@
             this.btnSelInvert.Image = ((System.Drawing.Image)(resources.GetObject("btnSelInvert.Image")));
             this.btnSelInvert.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSelInvert.Name = "btnSelInvert";
-            this.btnSelInvert.Size = new System.Drawing.Size(40, 22);
+            this.btnSelInvert.Size = new System.Drawing.Size(41, 22);
             this.btnSelInvert.Text = "Invert";
             // 
             // btnSelNone
@@ -161,7 +161,7 @@
             this.btnSelNone.Image = ((System.Drawing.Image)(resources.GetObject("btnSelNone.Image")));
             this.btnSelNone.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSelNone.Name = "btnSelNone";
-            this.btnSelNone.Size = new System.Drawing.Size(39, 22);
+            this.btnSelNone.Size = new System.Drawing.Size(36, 22);
             this.btnSelNone.Text = "None";
             // 
             // toolStripSeparator3
@@ -174,7 +174,7 @@
             this.btnDeleteAll.Image = global::StartProgramCleaner.Properties.Resources.delete_all_16;
             this.btnDeleteAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDeleteAll.Name = "btnDeleteAll";
-            this.btnDeleteAll.Size = new System.Drawing.Size(122, 22);
+            this.btnDeleteAll.Size = new System.Drawing.Size(116, 22);
             this.btnDeleteAll.Text = "Delete All Selected";
             // 
             // btnRescan
@@ -182,7 +182,7 @@
             this.btnRescan.Image = global::StartProgramCleaner.Properties.Resources.refresh_16;
             this.btnRescan.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRescan.Name = "btnRescan";
-            this.btnRescan.Size = new System.Drawing.Size(63, 22);
+            this.btnRescan.Size = new System.Drawing.Size(62, 22);
             this.btnRescan.Text = "Rescan";
             // 
             // lvFiles
@@ -198,7 +198,7 @@
             this.lvFiles.Location = new System.Drawing.Point(0, 97);
             this.lvFiles.MultiSelect = false;
             this.lvFiles.Name = "lvFiles";
-            this.lvFiles.Size = new System.Drawing.Size(632, 330);
+            this.lvFiles.Size = new System.Drawing.Size(827, 372);
             this.lvFiles.SmallImageList = this.il16;
             this.lvFiles.TabIndex = 2;
             this.lvFiles.UseCompatibleStateImageBehavior = false;
@@ -234,9 +234,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 427);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 469);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(632, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(827, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -250,7 +250,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 449);
+            this.ClientSize = new System.Drawing.Size(827, 491);
             this.Controls.Add(this.lvFiles);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
@@ -258,6 +258,7 @@
             this.Font = new System.Drawing.Font("Tahoma", 8F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Start Menu Cleaner .NET";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
