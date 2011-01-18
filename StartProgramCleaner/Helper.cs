@@ -53,26 +53,26 @@ namespace StartProgramCleaner
             ShortcutFiles.Clear();
             EmptyDirectories.Clear();
 
-            foreach (var pr in ProgramsPath)
-            {
-                DirRecurseSearch(Path.Combine(pr, ProgramsFolder));
-            }
-        }
-        
-        private static void DirRecurseSearch(string sDir)
-        {
             try
             {
-                CheckDirectory(sDir);
-
-                foreach (var dir in Directory.GetDirectories(sDir))
+                foreach (var pr in ProgramsPath)
                 {
-                    DirRecurseSearch(dir);
+                    DirRecurseSearch(Path.Combine(pr, ProgramsFolder));
                 }
             }
-            catch (Exception excpt)
+            catch (Exception ex)
             {
-                Console.WriteLine(excpt.Message);
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private static void DirRecurseSearch(string sDir)
+        {
+            CheckDirectory(sDir);
+
+            foreach (var dir in Directory.GetDirectories(sDir))
+            {
+                DirRecurseSearch(dir);
             }
         }
 
