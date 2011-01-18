@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartProgramCleaner", "StartProgramCleaner\StartProgramCleaner.csproj", "{A5A8CD7E-D4F9-45EB-BC65-DAB5A65F6254}"
 EndProject
 Global
