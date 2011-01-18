@@ -28,9 +28,8 @@ namespace StartProgramCleaner
 
         private static string GetProgramsFolder()
         {
-            var programs = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.Programs));
             var startmenu = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu));
-            return string.Format("{0}\\{1}", startmenu.Name, programs.Name);
+            return startmenu.Name;
         }
 
         /// <summary>
@@ -64,54 +63,57 @@ namespace StartProgramCleaner
         
         private static void DirRecurseSearch(string sDir)
         {
-            var i = 0;
-
             try
             {
-                foreach (var d in Directory.GetDirectories(sDir))
+                foreach (var dir in Directory.GetDirectories(sDir))
                 {
-                    i++;
-                    System.Diagnostics.Debug.WriteLine(i.ToString("00#", null) + " = " + d);
+                    System.Diagnostics.Debug.WriteLine(dir);
 
-                    // check if the current folder `d` is empty
-                    if (Directory.GetFiles(d).Length == 0 && Directory.GetDirectories(d).Length == 0)
+                    if (IsDirectoryEmpty(dir))
                     {
                         var sd = new ShortcutDetails
                                      {
-                                         Name = Path.GetFileName(d),
+                                         Name = Path.GetFileName(dir),
                                          Target = "Empty Directory",
-                                         ShortcutPath = d,
+                                         ShortcutPath = dir,
                                          Description = "Empty Directory"
                                      };
                         EmptyDirectories.Add(sd);
                         continue;
                     }
                     
-                    foreach (var f in Directory.GetFiles(d))
+                    foreach (var file in Directory.GetFiles(dir))
                     {
-                        var e = Path.GetExtension(f);
+                        System.Diagnostics.Debug.WriteLine(file);
+
+                        var e = Path.GetExtension(file);
                         if (string.IsNullOrEmpty(e) || e.ToLower() != ".lnk") continue;
 
-                        var targetFilepath = GetTarget(f);
+                        var targetFilepath = GetTarget(file);
                         if (System.IO.File.Exists(targetFilepath) || Directory.Exists(targetFilepath)) continue;
 
                         var sd = new ShortcutDetails
                                      {
-                                         Name = Path.GetFileNameWithoutExtension(f),
+                                         Name = Path.GetFileNameWithoutExtension(file),
                                          Target = targetFilepath,
-                                         ShortcutPath = f,
-                                         Description = GetDescription(f)
+                                         ShortcutPath = file,
+                                         Description = GetDescription(file)
                                      };
                         ShortcutFiles.Add(sd);
                     }
 
-                    DirRecurseSearch(d);
+                    DirRecurseSearch(dir);
                 }
             }
             catch (Exception excpt)
             {
                 Console.WriteLine(excpt.Message);
             }
+        }
+
+        private static bool IsDirectoryEmpty(string path)
+        {
+            return Directory.GetFiles(path).Length == 0 && Directory.GetDirectories(path).Length == 0;
         }
 
         public static void OpenInExplorer(string shortcutFile)
