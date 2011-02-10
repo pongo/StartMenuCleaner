@@ -83,8 +83,10 @@ namespace StartProgramCleaner
 
             if (IsDirectoryEmpty(dir))
             {
-                EmptyDirectories.Add(CreateNewShortcutDetails(
-                    Path.GetFileName(dir), "Empty Directory", dir, "Empty Directory"));
+                EmptyDirectories.Add(CreateNewShortcutDetails(Path.GetFileName(dir),
+                                                              "Empty Directory",
+                                                              dir,
+                                                              "Empty Directory"));
 
                 return;
             }
@@ -92,37 +94,44 @@ namespace StartProgramCleaner
             foreach (var file in Directory.GetFiles(dir))
             {
                 System.Diagnostics.Debug.WriteLine(file);
-
-                var extension = Path.GetExtension(file);
-                if (string.IsNullOrEmpty(extension) || extension.ToLower() != ".lnk") continue;
+                
+                if (IsNotALink(file)) continue;
 
                 var targetFilePath = GetShortcutTarget(file);
                 if (IsTargetExists(targetFilePath)) continue;
 
-                ShortcutFiles.Add(CreateNewShortcutDetails(
-                    Path.GetFileNameWithoutExtension(file), targetFilePath, file, GetShortcutDescription(file)));
+                ShortcutFiles.Add(CreateNewShortcutDetails(Path.GetFileNameWithoutExtension(file),
+                                                           targetFilePath,
+                                                           file,
+                                                           GetShortcutDescription(file)));
             }
+        }
+
+        private static bool IsDirectoryEmpty(string path)
+        {
+            return Directory.GetFiles(path).Length == 0 && Directory.GetDirectories(path).Length == 0;
+        }
+
+        private static bool IsNotALink(string path)
+        {
+            var extension = Path.GetExtension(path);
+            return string.IsNullOrEmpty(extension) || extension.ToLower() != ".lnk";
         }
 
         private static bool IsTargetExists(string path)
         {
             return System.IO.File.Exists(path) || Directory.Exists(path);
         }
-
+        
         private static ShortcutDetails CreateNewShortcutDetails(string name, string target, string shortcutPath, string description)
         {
             return new ShortcutDetails
-                       {
-                           Name = name,
-                           Target = target,
-                           ShortcutPath = shortcutPath,
-                           Description = description
-                       };
-        }
-
-        private static bool IsDirectoryEmpty(string path)
-        {
-            return Directory.GetFiles(path).Length == 0 && Directory.GetDirectories(path).Length == 0;
+            {
+                Name = name,
+                Target = target,
+                ShortcutPath = shortcutPath,
+                Description = description
+            };
         }
 
         /// <summary>
