@@ -67,7 +67,7 @@
         {
             if (sender == this.btnDeleteAll)
             {
-                /* first remove the labels, and then folders */
+                /* first remove the shortcuts, and then folders */
 
                 foreach (ListViewItem item in this.lvFiles.Items)
                 {
@@ -170,6 +170,7 @@
                 item.ImageIndex = 0;
 
                 item.Tag = sd;
+                item.Checked = true;
 
                 this.lvFiles.Items.Add(item);
             }
@@ -182,6 +183,7 @@
                 item.ImageIndex = 1;
 
                 item.Tag = sd;
+                item.Checked = true;
 
                 this.lvFiles.Items.Add(item);
             }
