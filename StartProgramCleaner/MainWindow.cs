@@ -1,18 +1,18 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows.Forms;
-
-namespace StartProgramCleaner
+﻿namespace StartProgramCleaner
 {
+    using System;
+    using System.ComponentModel;
+    using System.Windows.Forms;
+
     public partial class MainWindow : Form
     {
         public int SelIndex;
 
         public MainWindow()
         {
-            InitializeComponent();
-            InitializeControls();
-            InitializeControlEvents();
+            this.InitializeComponent();
+            this.InitializeControls();
+            this.InitializeControlEvents();
         }
 
         public void InitializeControls()
@@ -21,42 +21,42 @@ namespace StartProgramCleaner
 
         public void InitializeControlEvents()
         {
-            bgWorker.DoWork += bgWorker_DoWork;
-            bgWorker.RunWorkerCompleted += bgWorker_RunWorkerCompleted;
-            bgWorker.ProgressChanged += bgWorker_ProgressChanged;
+            this.bgWorker.DoWork += this.bgWorker_DoWork;
+            this.bgWorker.RunWorkerCompleted += this.bgWorker_RunWorkerCompleted;
+            this.bgWorker.ProgressChanged += this.bgWorker_ProgressChanged;
 
-            Shown += MainWindow_Shown;
+            this.Shown += this.MainWindow_Shown;
 
-            lvFiles.ItemSelectionChanged += lvFiles_ItemSelectionChanged;
-            lvFiles.DoubleClick += lvFiles_DoubleClick;
+            this.lvFiles.ItemSelectionChanged += this.lvFiles_ItemSelectionChanged;
+            this.lvFiles.DoubleClick += this.lvFiles_DoubleClick;
 
-            btnDeleteAll.Click += DeleteButtons_Click;
+            this.btnDeleteAll.Click += this.DeleteButtons_Click;
 
-            btnSelAll.Click += SelectionButtons_Click;
-            btnSelInvert.Click += SelectionButtons_Click;
-            btnSelNone.Click += SelectionButtons_Click;
+            this.btnSelAll.Click += this.SelectionButtons_Click;
+            this.btnSelInvert.Click += this.SelectionButtons_Click;
+            this.btnSelNone.Click += this.SelectionButtons_Click;
 
-            btnRescan.Click += btnRescan_Click;
+            this.btnRescan.Click += this.btnRescan_Click;
         }
 
         private void btnRescan_Click(object sender, EventArgs e)
         {
-            bgWorker.RunWorkerAsync();
+            this.bgWorker.RunWorkerAsync();
         }
 
         private void SelectionButtons_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in lvFiles.Items)
+            foreach (ListViewItem item in this.lvFiles.Items)
             {
-                if (sender == btnSelAll)
+                if (sender == this.btnSelAll)
                 {
                     item.Checked = true;
                 }
-                else if (sender == btnSelInvert)
+                else if (sender == this.btnSelInvert)
                 {
                     item.Checked = !item.Checked;
                 }
-                else if (sender == btnSelNone)
+                else if (sender == this.btnSelNone)
                 {
                     item.Checked = false;
                 }
@@ -65,17 +65,27 @@ namespace StartProgramCleaner
 
         private void DeleteButtons_Click(object sender, EventArgs e)
         {
-            if (sender == btnDeleteAll)
+            if (sender == this.btnDeleteAll)
             {
-                // сперва удаляем ярлыки, а потом папки
+                /* first remove the labels, and then folders */
 
-                foreach (ListViewItem item in lvFiles.Items)
+                foreach (ListViewItem item in this.lvFiles.Items)
                 {
-                    if (!item.Checked) continue;
-                    if (item.Text == @"Deleted") continue;
+                    if (!item.Checked)
+                    {
+                        continue;
+                    }
 
-                    var sd = (ShortcutDetails) item.Tag;
-                    if (sd.Description == "Empty Directory") continue;
+                    if (item.Text == @"Deleted")
+                    {
+                        continue;
+                    }
+
+                    var sd = (ShortcutDetails)item.Tag;
+                    if (sd.Description == "Empty Directory")
+                    {
+                        continue;
+                    }
 
                     item.Text = @"Deleting > " + item.Text;
                     Helper.ShortcutFiles.Remove(item.Tag);
@@ -83,13 +93,23 @@ namespace StartProgramCleaner
                     item.Text = @"Deleted";
                 }
 
-                foreach (ListViewItem item in lvFiles.Items)
+                foreach (ListViewItem item in this.lvFiles.Items)
                 {
-                    if (!item.Checked) continue;
-                    if (item.Text == @"Deleted") continue;
+                    if (!item.Checked)
+                    {
+                        continue;
+                    }
 
-                    var sd = (ShortcutDetails) item.Tag;
-                    if (sd.Description != "Empty Directory") continue;
+                    if (item.Text == @"Deleted")
+                    {
+                        continue;
+                    }
+
+                    var sd = (ShortcutDetails)item.Tag;
+                    if (sd.Description != "Empty Directory")
+                    {
+                        continue;
+                    }
 
                     item.Text = @"Deleting > " + item.Text;
                     Helper.EmptyDirectories.Remove(item.Tag);
@@ -98,50 +118,49 @@ namespace StartProgramCleaner
                 }
             }
 
-            bgWorker_RunWorkerCompleted(bgWorker, new RunWorkerCompletedEventArgs(null, null, false));
+            this.bgWorker_RunWorkerCompleted(this.bgWorker, new RunWorkerCompletedEventArgs(null, null, false));
         }
 
         private void lvFiles_DoubleClick(object sender, EventArgs e)
         {
-            var sd = (ShortcutDetails) lvFiles.Items[SelIndex].Tag;
+            var sd = (ShortcutDetails)this.lvFiles.Items[this.SelIndex].Tag;
             Helper.OpenInExplorer(sd.ShortcutPath);
         }
 
         private void lvFiles_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            var sd = (ShortcutDetails) e.Item.Tag;
+            var sd = (ShortcutDetails)e.Item.Tag;
 
-            lblStatus.Text = sd.Description;
+            this.lblStatus.Text = sd.Description;
 
-            SelIndex = e.ItemIndex;
+            this.SelIndex = e.ItemIndex;
         }
 
         private void MainWindow_Shown(object sender, EventArgs e)
         {
-            bgWorker.RunWorkerAsync();
+            this.bgWorker.RunWorkerAsync();
         }
 
         private void bgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             if (e.ProgressPercentage == 1)
             {
-                lblStatus.Text = @"Scanning ...";
-                btnDeleteAll.Enabled = false;
-                lvFiles.Enabled = false;
+                this.lblStatus.Text = @"Scanning ...";
+                this.btnDeleteAll.Enabled = false;
+                this.lvFiles.Enabled = false;
             }
             else if (e.ProgressPercentage == 2)
             {
-                lblStatus.Text = string.Format(lblStatus.Tag.ToString(),
-                                               Helper.ShortcutFiles.Count,
-                                               Helper.EmptyDirectories.Count);
-                btnDeleteAll.Enabled = true;
-                lvFiles.Enabled = true;
+                this.lblStatus.Text = string.Format(
+                    this.lblStatus.Tag.ToString(), Helper.ShortcutFiles.Count, Helper.EmptyDirectories.Count);
+                this.btnDeleteAll.Enabled = true;
+                this.lvFiles.Enabled = true;
             }
         }
 
         private void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            lvFiles.Items.Clear();
+            this.lvFiles.Items.Clear();
 
             foreach (ShortcutDetails sd in Helper.ShortcutFiles)
             {
@@ -152,7 +171,7 @@ namespace StartProgramCleaner
 
                 item.Tag = sd;
 
-                lvFiles.Items.Add(item);
+                this.lvFiles.Items.Add(item);
             }
 
             foreach (ShortcutDetails sd in Helper.EmptyDirectories)
@@ -164,20 +183,20 @@ namespace StartProgramCleaner
 
                 item.Tag = sd;
 
-                lvFiles.Items.Add(item);
+                this.lvFiles.Items.Add(item);
             }
 
-            foreach (ColumnHeader ch in lvFiles.Columns)
+            foreach (ColumnHeader ch in this.lvFiles.Columns)
             {
                 ch.Width = -1;
             }
 
-            bgWorker_ProgressChanged(bgWorker, new ProgressChangedEventArgs(2, null));
+            this.bgWorker_ProgressChanged(this.bgWorker, new ProgressChangedEventArgs(2, null));
         }
 
         private void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            bgWorker.ReportProgress(1);
+            this.bgWorker.ReportProgress(1);
 
             Helper.GetShortcuts();
         }
