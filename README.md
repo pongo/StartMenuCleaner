@@ -18,6 +18,8 @@ Enhancements:
 
 (Tested only on Windows XP)
 
+[Download](https://github.com/downloads/pongo/StartMenuCleaner/StartMenuCleaner%20-%20Release.zip).
+
 ![Start Menu Cleaner](https://raw.github.com/pongo/StartMenuCleaner/master/screenshot.png)
 
 ***
@@ -36,5 +38,7 @@ Start Menu Cleaner - это программа для очистки меню П
 * Теперь программа удаляет папки и ярлыки в Корзину.
 
 (Проверялось только на Windows XP)
+
+[Скачать](https://github.com/downloads/pongo/StartMenuCleaner/StartMenuCleaner%20-%20Release.zip).
 
 ![Start Menu Cleaner](https://raw.github.com/pongo/StartMenuCleaner/master/screenshot.png)
